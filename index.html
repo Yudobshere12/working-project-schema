@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gas-Simhot | LPG Leak Detector</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <h1>Gas-Simhot System</h1>
+        <ul>
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <section class="monitor-card">
+            <h2>LPG Concentration Level</h2>
+            <div id="status-indicator" class="safe">
+                <span id="gas-value">0</span> PPM
+            </div>
+            <p id="alert-text">Status: System Normal</p>
+            <button onclick="simulateLeak()">Simulate Gas Leak</button>
+            <button onclick="resetSystem()">Reset System</button>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
