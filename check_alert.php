@@ -1,12 +1,26 @@
 <?php
+header('Content-Type: application/json');
 $conn = new mysqli("localhost", "root", "", "working_project_schema");
 
-// Gidugangan og JOIN para makuha ang coordinates sa staff gikan sa users table
-$query = "SELECT s.*, u.lat, u.lng 
-          FROM system_status s 
-          LEFT JOIN users u ON s.triggered_by = u.full_name 
-          WHERE s.id = 1";
+// Check connection
+if ($conn->connect_error) {
+    echo json_encode(["error" => "Connection failed"]);
+    exit();
+}
+
+// We pull all columns from system_status because log_action.php 
+// now fills in 'lat', 'lng', and 'location' automatically.
+$query = "SELECT * FROM system_status WHERE id = 1";
 
 $res = $conn->query($query);
-echo json_encode($res->fetch_assoc());
+
+if ($res && $row = $res->fetch_assoc()) {
+    // Ensure numbers are sent as floats for the Leaflet Map
+    if (isset($row['lat'])) $row['lat'] = (float)$row['lat'];
+    if (isset($row['lng'])) $row['lng'] = (float)$row['lng'];
+    
+    echo json_encode($row);
+} else {
+    echo json_encode(["is_active" => 0]);
+}
 ?>
